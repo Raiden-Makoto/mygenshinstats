@@ -10,12 +10,13 @@
 <body>
     <h1>Get My Stats</h1>
     <input type="text" id="uid" placeholder="Enter your UID">
-    <button id="get-stats">Get My Stats</button>
+    <button id="get-stats" onclick="getStats()">Get My Stats</button>
     <div id="stats"></div>
     <script>
         function getStats() {
             const uid = document.getElementById("uid").value;
-            fetch(`/get-stats/${uid}`, {
+            console.log(uid);
+            fetch(`/get-stats/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -24,16 +25,16 @@
                 body: JSON.stringify({ uid }),
             })
             .then(response => response.json())
-            .then(data => {
-                const data = document.getElementById("my-stats");
-                if (data.error) {
-                    data.innerHTML = `<p>${data.error}</p>`;
+            .then(responseData => {
+                const statsDiv = document.getElementById("stats");
+                if (responseData.error) {
+                    statsDiv.innerHTML = `<p>${responseData.error}</p>`;
                 } else {
-                    data.innerHTML = `<p>Name: ${data.name}</p>
-                    <p>Current World Level: ${data.world_level}</p>
-                    <p>CurrentAdventure Rank: ${data.adventure_rank}</p>
-                    <p>You have ${data.num_characters} characters!</p>
-                    <p>Achievements: ${data.achievements}</p>`;
+                    statsDiv.innerHTML = `<p>Name: ${responseData.name}</p>
+                    <p>Current World Level: ${responseData.world_level}</p>
+                    <p>Current Adventure Rank: ${responseData.adventure_rank}</p>
+                    <p>You have ${responseData.num_characters} characters!</p>
+                    <p>Achievements: ${responseData.achievements}</p>`;
                 }
             });
         }
