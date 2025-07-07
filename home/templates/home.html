@@ -1,11 +1,56 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>My Genshin Stats</title>
+    <link rel="stylesheet" href="{% static 'home/style.css' %}">
 </head>
 <body>
-    <h1>Home</h1>
+    <h1>Get My Stats</h1>
+    <input type="text" id="uid" placeholder="Enter your UID">
+    <button id="get-stats">Get My Stats</button>
+    <div id="stats"></div>
+    <script>
+        function getStats() {
+            const uid = document.getElementById("uid").value;
+            fetch(`/get-stats/${uid}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCookie("csrftoken"),
+                },
+                body: JSON.stringify({ uid }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const data = document.getElementById("my-stats");
+                if (data.error) {
+                    data.innerHTML = `<p>${data.error}</p>`;
+                } else {
+                    data.innerHTML = `<p>Name: ${data.name}</p>
+                    <p>Current World Level: ${data.world_level}</p>
+                    <p>CurrentAdventure Rank: ${data.adventure_rank}</p>
+                    <p>You have ${data.num_characters} characters!</p>
+                    <p>Achievements: ${data.achievements}</p>`;
+                }
+            });
+        }
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== "") {
+                const cookies = document.cookie.split(";");
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
 </body>
 </html>

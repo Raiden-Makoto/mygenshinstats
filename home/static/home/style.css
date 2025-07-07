@@ -1,0 +1,53 @@
+@font-face {
+    font-family: 'Genshin';
+    src: url('/static/home/fonts/gifont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    padding: 2rem;
+    font-family: 'Genshin', sans-serif;
+}
+
+h1, h2 {
+    color: rgb(255, 255, 255);
+}
+
+input[type="text"] {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    margin-right: 0.5rem;
+    width: 200px;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: rgb(255, 255, 255);
+    color: #ff00a6;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgb(255, 255, 255);
+}
+
+#error {
+    color: red;
+}
+
+#stats {
+    margin-top: 2rem;
+}
+
+p {
+    margin: 0.5rem 0;
+}
